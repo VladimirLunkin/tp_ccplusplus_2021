@@ -17,7 +17,7 @@ script:
   - cd build
   - cmake ..
   - make clean && make
-  - valgrind --tool=memcheck --leak-check=full -coverage ./test/tests_tests
+  - valgrind --tool=memcheck --leak-check=full ./test/tests_tests
 
 codecov:
   token: da3effde-9ccb-4281-a7d3-4b283cf00a6f
