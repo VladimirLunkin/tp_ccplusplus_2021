@@ -19,8 +19,5 @@ script:
   - make clean && make
   - valgrind --tool=memcheck --leak-check=full ./test/tests_tests
 
-codecov:
-  token: da3effde-9ccb-4281-a7d3-4b283cf00a6f
-
 after_success:
   - bash <(curl -s https://codecov.io/bash)
