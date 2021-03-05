@@ -12,9 +12,9 @@ install:
   - sudo pip install cpplint
 
 script:
-  - ./linters/run.sh
+#  - ./linters/run.sh
   - cd project/
-  - mkdir tests/test_output
+  - mkdir test/test_output
   - mkdir build
   - cd build
   - cmake ..
