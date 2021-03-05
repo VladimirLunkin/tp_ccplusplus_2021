@@ -4,7 +4,7 @@
 
 int main() {
     if (widget_ok(1, 1)) {
-        printf("%s", "Hello, world!");
+        printf("%s\n", "Hello, world!");
     }
     return 0;
 }

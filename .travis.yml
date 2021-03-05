@@ -1,0 +1,25 @@
+dist: focal
+language: c
+
+os: linux
+
+compiler: gcc
+
+install:
+  - sudo apt-get install valgrind
+  - sudo apt-get install clang
+  - sudo apt-get install cppcheck
+  - sudo pip install cpplint
+
+script:
+  - ./linters/run.sh
+  - cd project/
+  - mkdir tests/test_output
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make clean && make
+  - valgrind --tool=memcheck --leak-check=full ./tests/tests_tests
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
