@@ -8,12 +8,12 @@ compiler: gcc
 install:
   - sudo apt-get install valgrind
   - sudo apt-get install clang
-  - sudo apt-get install cppcheck
+#  - sudo apt-get install cppcheck
   - sudo pip install cpplint
 
 script:
 #  - ./linters/run.sh
-  - mkdir test/test_output
+#  - mkdir test/test_output
   - mkdir build
   - cd build
   - cmake ..
