@@ -13,13 +13,12 @@ install:
 
 script:
 #  - ./linters/run.sh
-  - cd project/
   - mkdir test/test_output
   - mkdir build
   - cd build
   - cmake ..
   - make clean && make
-  - valgrind --tool=memcheck --leak-check=full ./tests/tests_tests
+  - valgrind --tool=memcheck --leak-check=full ./test/tests_tests
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
