@@ -7,14 +7,11 @@ compiler: gcc
 
 install:
   - sudo apt-get install valgrind
-  - sudo apt-get install clang
   - sudo pip install cpplint
 
 script:
-#  - ./linters/run.sh
-#  - mkdir test/test_output
-  - mkdir build
-  - cd build
+  - cpplint --extensions=c include/*/* src/*
+  - mkdir build && cd build
   - cmake ..
   - make clean && make
   - valgrind --tool=memcheck --leak-check=full ./test/tests_tests
