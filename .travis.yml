@@ -7,7 +7,6 @@ compiler: gcc
 
 install:
     - sudo apt-get install valgrind
-    - sudo apt-get install clang
     - sudo pip install cpplint
 
 script:
