@@ -8,6 +8,7 @@ compiler: gcc
 install:
   - sudo apt-get install valgrind
   - sudo pip install cpplint
+  - sudo pip install coverage
 
 script:
   - cpplint --extensions=c include/*/* src/*
