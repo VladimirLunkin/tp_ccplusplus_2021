@@ -6,9 +6,9 @@ os: linux
 compiler: gcc
 
 install:
-  - sudo apt-get install valgrind
-  - sudo pip install cpplint
-  - sudo pip install coverage
+    - sudo apt-get install valgrind
+    - sudo apt-get install clang
+    - sudo pip install cpplint
 
 script:
   - cpplint --extensions=c include/*/* src/*
