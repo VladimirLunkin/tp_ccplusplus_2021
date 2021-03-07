@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 project(hw-1)
 
 # <Coverage>
-set(CMAKE_C_FLAGS "-pedantic -fprofile-arcs -ftest-coverage")
-set(CMAKE_CXX_FLAGS "-pedantic -fprofile-arcs -ftest-coverage")
+set(CMAKE_C_FLAGS "-pedantic -fprofile-arcs --coverage")
+set(CMAKE_CXX_FLAGS "-pedantic -fprofile-arcs --coverage")
 # </Coverage>
 
 # <Test>
