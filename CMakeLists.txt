@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.16)
 project(hw-1)
 
-set(CMAKE_C_STANDARD 99)
-
+# <Coverage>
 set(CMAKE_C_FLAGS "-pedantic -fprofile-arcs -ftest-coverage")
 set(CMAKE_CXX_FLAGS "-pedantic -fprofile-arcs -ftest-coverage")
+# </Coverage>
 
 # <Test>
 configure_file(CMakeLists.txt.in
