@@ -15,6 +15,7 @@ script:
   - cmake ..
   - make clean && make
   - valgrind --tool=memcheck --leak-check=full ./test/tests_tests
+  - ls -lah
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
