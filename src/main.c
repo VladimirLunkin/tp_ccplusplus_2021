@@ -10,11 +10,15 @@ int is_equal(float x, float y) {
 
 int main() {
     char data[] = "Огонь 2020 драма 7.7";
-    film_t *film = parse_str_to_film(data);
+    film_t *film = create_film_str(data);
+    if (film == NULL) {
+        printf("No create film\n");
+        return 1;
+    }
     if (strcmp(film->movie_title, "Огонь") == 0 &&
                 film->year_of_issue == 2020 &&
                 strcmp(film->genre, "драма") == 0) printf("cool!\n");
-    print_film(film, NULL);
+    print_film(NULL, film);
     free_film(film);
     return 0;
 }

@@ -40,8 +40,8 @@ film_t *create_film(char *movie_title, unsigned short year_of_issue, char *genre
     return film;
 }
 
-film_t *parse_str_to_film(char *data) {
-    if (data == NULL) {
+film_t *create_film_str(char *data) {
+    if (data == NULL || strlen(data) > SIZE_STR) {
         return NULL;
     }
 
@@ -49,26 +49,23 @@ film_t *parse_str_to_film(char *data) {
     unsigned short year_of_issue = 0;
     char genre[SIZE_STR];
     float average_rating = 0;
-    /// Сделать нормально!!!
     if (sscanf(data, "%s%hu%s%f", movie_title, &year_of_issue, genre, &average_rating) != 4) {
         return NULL;
     }
 
-    film_t *film = create_film(movie_title, year_of_issue, genre, average_rating);
-
-    return film;
+    return create_film(movie_title, year_of_issue, genre, average_rating);
 }
 
-int print_film(film_t *film, FILE *out) {
+int print_film(FILE *fptr, film_t *film) {
     if (film == NULL) {
         return 1;
     }
 
-    if (out == NULL) {
-        out = stdout;
+    if (fptr == NULL) {
+        fptr = stdout;
     }
 
-    if (fprintf(out, "%s\t%hu\t%s\t%f\n", film->movie_title,
+    if (fprintf(fptr, "%s\t%hu\t%s\t%f\n", film->movie_title,
                film->year_of_issue, film->genre, film->average_rating) < 0) {
         return 1;
     }

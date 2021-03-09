@@ -11,8 +11,8 @@ typedef struct {
 } film_t;
 
 film_t *create_film(char *, unsigned short, char *, float);
-film_t *parse_str_to_film(char *);
-int print_film(film_t *, FILE *);
+film_t *create_film_str(char *);
+int print_film(FILE *, film_t *);
 int free_film(film_t *);
 
 #endif  // INCLUDE_FILM_FILM_H_
