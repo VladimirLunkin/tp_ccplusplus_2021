@@ -57,12 +57,8 @@ film_t *create_film_str(char *data) {
 }
 
 int print_film(FILE *fptr, film_t *film) {
-    if (film == NULL) {
+    if (fptr == NULL || film == NULL) {
         return 1;
-    }
-
-    if (fptr == NULL) {
-        fptr = stdout;
     }
 
     if (fprintf(fptr, "%s\t%hu\t%s\t%f\n", film->movie_title,

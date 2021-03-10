@@ -92,11 +92,6 @@ TEST(create_film_str, correct_arguments) {
 TEST(print_film, null_arguments) {
     EXPECT_EQ(1, print_film(nullptr, nullptr));
 }
-TEST(print_film, stdout) {
-    film_t *film = create_film((char*)"Огонь", 2020, (char*)"драма", 7.7);
-    EXPECT_EQ(0, print_film(nullptr, film));
-    free_film(film);
-}
 TEST(print_film, file) {
     char file_name[] = "test_print_film";
     FILE *fptr = fopen(file_name, "w");
