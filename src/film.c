@@ -56,12 +56,22 @@ film_t *create_film_str(char *data) {
     return create_film(movie_title, year_of_issue, genre, average_rating);
 }
 
-int print_film(FILE *fptr, film_t *film) {
-    if (fptr == NULL || film == NULL) {
+int read_film_from_file(FILE *fp, film_t *film) {
+    if (fp == NULL || film == NULL) {
         return 1;
     }
 
-    if (fprintf(fptr, "%s\t%hu\t%s\t%f\n", film->movie_title,
+
+
+    return 0;
+}
+
+int print_film(FILE *fp, film_t *film) {
+    if (fp == NULL || film == NULL) {
+        return 1;
+    }
+
+    if (fprintf(fp, "%s\t%hu\t%s\t%f\n", film->movie_title,
                film->year_of_issue, film->genre, film->average_rating) < 0) {
         return 1;
     }

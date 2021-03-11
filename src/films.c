@@ -43,13 +43,13 @@ int read_films_from_file(char *file_name, films_t *films) {
     return 0;
 }
 
-int print_films(FILE *fptr, films_t *films) {
-    if (fptr == NULL || films == NULL) {
+int print_films(FILE *fp, films_t *films) {
+    if (fp == NULL || films == NULL) {
         return 1;
     }
 
     for (int i = 0; i < films->quantity; ++i) {
-        if (print_film(fptr, films->films[i]) != 0) {
+        if (print_film(fp, films->films[i]) != 0) {
             return 1;
         }
     }
