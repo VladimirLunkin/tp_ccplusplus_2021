@@ -6,10 +6,12 @@ os: linux
 compiler: gcc
 
 install:
-    - sudo apt-get install valgrind
-    - sudo pip install cpplint
+  - sudo apt-get install valgrind
+  - sudo apt-get install cppcheck
+  - sudo pip install cpplint
 
 script:
+  - cppcheck --inconclusive --enable=all --language=c include/*/*.h src/*.c
   - cpplint --extensions=c include/*/* src/*
   - mkdir build && cd build
   - cmake ..
