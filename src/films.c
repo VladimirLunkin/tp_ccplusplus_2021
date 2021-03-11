@@ -4,48 +4,30 @@
 #include <stdlib.h>
 
 
-//films_t *read_films_from_file(FILE *fp, film_t *films, size_t *size) {
-//    if (fp == NULL) {
-//        return NULL;
-//    }
-//
-//    films_t *films = malloc();
-//    if (fscanf(fp, "%zu", &films->size) != 1) {
-//        return NULL;
-//    }
-//
-//    films->films = malloc(sizeof(film_t) * films->size);
-//
-//    for (int i = 0; i < films->size; ++i) {
-//        if ((films->films[i] = read_film_from_file(fp)) == NULL) {
-//            free_films(films);
-//            return NULL;
-//        }
-//    }
-//
-//    return ;
-//}
-
-int read_films_from_file(FILE *fp, film_t **films, size_t *size) {
+int read_films_from_file(FILE *fp, film_t ***films, size_t *size) {
     if (fp == NULL) {
         return 1;
     }
 
-    if (fscanf(fp, "%zu\n", size) != 1) {
+    size_t size_tmp = 0;
+    if (fscanf(fp, "%zu\n", &size_tmp) != 1) {
         return 1;
     }
 
-    films = malloc((*size) * sizeof(film_t));
-    if (films == NULL) {
+    film_t **films_tmp = malloc(size_tmp * sizeof(film_t));
+    if (films_tmp == NULL) {
         return 1;
     }
 
-    for (int i = 0; i < *size; ++i) {
-        if ((films[i] = read_film_from_file(fp)) == NULL) {
-            free_films(films, *size);
+    for (int i = 0; i < size_tmp; ++i) {
+        if ((films_tmp[i] = read_film_from_file(fp)) == NULL) {
+            free_films(films_tmp, size_tmp);
             return 1;
         }
     }
+
+    *films = films_tmp;
+    *size = size_tmp;
 
     return 0;
 }
@@ -77,20 +59,3 @@ int free_films(film_t **films, size_t size) {
 
     return 0;
 }
-
-//int free_films(films_t *films) {
-//    if (films == NULL) {
-//        return 1;
-//    }
-//
-//    for (int i = 0; i < films->size; ++i) {
-//        if (free_film(films->films[i]) != 0) {
-//            return 1;
-//        }
-//    }
-//
-//    free(films);
-//    films = NULL;
-//
-//    return 0;
-//}
