@@ -83,7 +83,7 @@ int read_str(FILE *fp, string_t *str) {
     clear_string(str);
 
     int symbol;
-    while ((symbol = fgetc(fp)) != '\n') {
+    while ((symbol = fgetc(fp)) != '\n' && symbol != EOF) {
         if (add_symbol(str, (char)symbol) != 0) {
             return 1;
         }
