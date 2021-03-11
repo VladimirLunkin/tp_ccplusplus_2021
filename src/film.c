@@ -1,10 +1,9 @@
 #include "film/film.h"
+#include "string/string.h"
 
 #include <stdlib.h>
 #include <string.h>
 
-
-#define SIZE_STR 1024
 
 film_t *create_film(char *movie_title, unsigned short year_of_issue, char *genre, float average_rating) {
     if (movie_title == NULL || genre == NULL) {
@@ -40,30 +39,43 @@ film_t *create_film(char *movie_title, unsigned short year_of_issue, char *genre
     return film;
 }
 
-film_t *create_film_str(char *data) {
-    if (data == NULL || strlen(data) > SIZE_STR) {
+film_t *read_film_from_file(FILE *fp) {
+    if (fp == NULL) {
         return NULL;
     }
 
-    char movie_title[SIZE_STR];
+    string_t *movie_title = create_string();
+    if (read_str(fp, movie_title) != 0) {
+        free_string(movie_title);
+        return NULL;
+    }
+
     unsigned short year_of_issue = 0;
-    char genre[SIZE_STR];
-    float average_rating = 0;
-    if (sscanf(data, "%s%hu%s%f", movie_title, &year_of_issue, genre, &average_rating) != 4) {
+    if (fscanf(fp, "%hu\n", &year_of_issue) != 1) {
+        free_string(movie_title);
         return NULL;
     }
 
-    return create_film(movie_title, year_of_issue, genre, average_rating);
-}
-
-int read_film_from_file(FILE *fp, film_t *film) {
-    if (fp == NULL || film == NULL) {
-        return 1;
+    string_t *genre = create_string();
+    if (read_str(fp, genre) != 0) {
+        free_string(movie_title);
+        free_string(genre);
+        return NULL;
     }
 
+    float average_rating = 0;
+    if (fscanf(fp, "%f\n", &average_rating) != 1) {
+        free_string(movie_title);
+        free_string(genre);
+        return NULL;
+    }
 
+    film_t *film = create_film(movie_title->str, year_of_issue, genre->str, average_rating);
 
-    return 0;
+    free_string(movie_title);
+    free_string(genre);
+
+    return film;
 }
 
 int print_film(FILE *fp, film_t *film) {

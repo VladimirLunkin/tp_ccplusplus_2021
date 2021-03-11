@@ -16,3 +16,5 @@ foreach(file ${tests})
     target_link_libraries("${name}_tests" gtest_main)
     add_test(NAME ${name} COMMAND "${name}_tests")
 endforeach()
+
+add_definitions(-DSOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")

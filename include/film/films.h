@@ -5,7 +5,7 @@
 
 typedef struct {
     film_t **films;
-    size_t quantity;
+    size_t size;
 } films_t;
 
 int read_films_from_file(char *, films_t *);

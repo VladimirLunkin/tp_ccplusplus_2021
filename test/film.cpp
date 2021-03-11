@@ -55,39 +55,39 @@ TEST(create_film, correct_arguments) {
     free_film(film);
 }
 
-TEST(create_film_str, null_arguments) {
-    film_t *film = create_film_str(nullptr);
-    EXPECT_EQ(nullptr, film);
-    free_film(film);
-}
-TEST(create_film_str, wrong_arguments_1) {
-    char data[] = "123";
-    film_t *film = create_film_str(data);
-    EXPECT_EQ(nullptr, film);
-    free_film(film);
-}
-TEST(create_film_str, wrong_arguments_2) {
-    char data[] = "Огонь 2020 драма";
-    film_t *film = create_film_str(data);
-    EXPECT_EQ(nullptr, film);
-    free_film(film);
-}
-TEST(create_film_str, wrong_arguments_3) {
-    char data[] = "Огонь Огонь Огонь Огонь";
-    film_t *film = create_film_str(data);
-    EXPECT_EQ(nullptr, film);
-    free_film(film);
-}
-TEST(create_film_str, correct_arguments) {
-    char data[] = "Огонь 2020 драма 7.7";
-    film_t *film = create_film_str(data);
-    EXPECT_TRUE(film != nullptr &&
-                        strcmp(film->movie_title, "Огонь") == 0 &&
-                        film->year_of_issue == 2020 &&
-                        strcmp(film->genre, "драма") == 0 &&
-                        is_equal(film->average_rating, 7.7));
-    free_film(film);
-}
+//TEST(create_film_str, null_arguments) {
+//    film_t *film = create_film_str(nullptr);
+//    EXPECT_EQ(nullptr, film);
+//    free_film(film);
+//}
+//TEST(create_film_str, wrong_arguments_1) {
+//    char data[] = "123";
+//    film_t *film = create_film_str(data);
+//    EXPECT_EQ(nullptr, film);
+//    free_film(film);
+//}
+//TEST(create_film_str, wrong_arguments_2) {
+//    char data[] = "Огонь 2020 драма";
+//    film_t *film = create_film_str(data);
+//    EXPECT_EQ(nullptr, film);
+//    free_film(film);
+//}
+//TEST(create_film_str, wrong_arguments_3) {
+//    char data[] = "Огонь Огонь Огонь Огонь";
+//    film_t *film = create_film_str(data);
+//    EXPECT_EQ(nullptr, film);
+//    free_film(film);
+//}
+//TEST(create_film_str, correct_arguments) {
+//    char data[] = "Огонь 2020 драма 7.7";
+//    film_t *film = create_film_str(data);
+//    EXPECT_TRUE(film != nullptr &&
+//                        strcmp(film->movie_title, "Огонь") == 0 &&
+//                        film->year_of_issue == 2020 &&
+//                        strcmp(film->genre, "драма") == 0 &&
+//                        is_equal(film->average_rating, 7.7));
+//    free_film(film);
+//}
 
 TEST(print_film, null_arguments) {
     EXPECT_EQ(1, print_film(nullptr, nullptr));

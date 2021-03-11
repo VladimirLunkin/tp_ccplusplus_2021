@@ -1,4 +1,5 @@
 #include "string/string.h"
+#include <stdlib.h>
 
 string_t *create_string() {
     string_t *str = malloc(sizeof(string_t));
