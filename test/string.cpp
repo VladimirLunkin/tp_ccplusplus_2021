@@ -15,7 +15,8 @@ TEST(free_string, correct_arguments) {
 
 TEST(create_string, alloc) {
     string_t *str = create_string();
-    ASSERT_TRUE(str != nullptr && str->str != nullptr);
+    EXPECT_TRUE(str != nullptr && str->str != nullptr);
+    free_string(str);
 }
 
 TEST(resize, null_arguments) {
