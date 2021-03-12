@@ -1,4 +1,3 @@
-#include "film/film.h"
 #include "film/films.h"
 
 #include <stdlib.h>
@@ -14,14 +13,15 @@ int read_films_from_file(FILE *fp, film_t ***films, size_t *size) {
         return 1;
     }
 
-    film_t **films_tmp = malloc(size_tmp * sizeof(film_t));
+    film_t **films_tmp = calloc(size_tmp, sizeof(film_t*));
     if (films_tmp == NULL) {
         return 1;
     }
 
     for (int i = 0; i < size_tmp; ++i) {
-        if ((films_tmp[i] = read_film_from_file(fp)) == NULL) {
-            free_films(films_tmp, size_tmp);
+        films_tmp[i] = read_film_from_file(fp);
+        if (films_tmp[i] == NULL) {
+            free_films(&films_tmp, size_tmp);
             return 1;
         }
     }
@@ -46,16 +46,16 @@ int print_films(FILE *fp, film_t **films, size_t size) {
     return 0;
 }
 
-int free_films(film_t **films, size_t size) {
+int free_films(film_t ***films, size_t size) {
     if (films == NULL) {
         return 1;
     }
 
     for (int i = 0; i < size; ++i) {
-        if (free_film(films[i]) != 0) {
-            return 1;
-        }
+        free_film((*films)[i]);
     }
+
+    free(*films);
 
     return 0;
 }

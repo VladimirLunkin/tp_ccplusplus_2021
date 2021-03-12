@@ -29,4 +29,8 @@ file(GLOB sources
         "${PROJECT_SOURCE_DIR}/src/*.c")
 # </Source>
 
+# <SOURCE_DIR>
+add_definitions(-DSOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
+# </SOURCE_DIR>
+
 add_executable(hw-1 ${sources})

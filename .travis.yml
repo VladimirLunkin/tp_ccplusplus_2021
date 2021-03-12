@@ -1,7 +1,8 @@
-dist: focal
-language: c
-
+arch: amd64
 os: linux
+dist: focal
+
+language: c
 
 compiler: gcc
 
@@ -11,7 +12,7 @@ install:
   - sudo pip install cpplint
 
 script:
-  - cppcheck --inconclusive --enable=all --language=c include/*/*.h src/*.c
+  - cppcheck --enable=all --language=c include/*/* src --suppress=missingInclude
   - cpplint --extensions=c include/*/* src/*
   - mkdir build && cd build
   - cmake ..
