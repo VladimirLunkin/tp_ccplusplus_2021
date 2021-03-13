@@ -34,10 +34,10 @@ TEST(create_film, correct_arguments) {
     char genre[] = "драма";
     float average_rating = 7.7;
     film_t *film = create_film(movie_title, year_of_issue, genre, average_rating);
-    EXPECT_TRUE(strcmp(film->movie_title, movie_title) == 0 &&
-                film->year_of_issue == year_of_issue &&
-                strcmp(film->genre, genre) == 0 &&
-                is_equal(film->average_rating, average_rating));
+    EXPECT_STREQ(movie_title, film->movie_title);
+    EXPECT_EQ(year_of_issue, film->year_of_issue);
+    EXPECT_STREQ(genre, film->genre);
+    EXPECT_FLOAT_EQ(average_rating, film->average_rating);
     free_film(film);
 }
 
@@ -51,10 +51,10 @@ TEST(create_and_copy, correct_arguments) {
     float average_rating = 7.7;
     film_t film_for_copy = {movie_title, year_of_issue, genre, average_rating};
     film_t *film = create_and_copy(&film_for_copy);
-    EXPECT_TRUE(strcmp(film->movie_title, movie_title) == 0 &&
-                film->year_of_issue == year_of_issue &&
-                strcmp(film->genre, genre) == 0 &&
-                is_equal(film->average_rating, average_rating));
+    EXPECT_STREQ(movie_title, film->movie_title);
+    EXPECT_EQ(year_of_issue, film->year_of_issue);
+    EXPECT_STREQ(genre, film->genre);
+    ASSERT_FLOAT_EQ(average_rating, film->average_rating);
     free_film(film);
 }
 
@@ -87,11 +87,11 @@ TEST(read_film_from_file, wrong_data_2) {
 TEST(read_film_from_file, correct_arguments) {
     FILE *fp = fopen(SOURCE_DIR"/data/db_1", "r");
     film_t *film = read_film_from_file(fp);
-    EXPECT_TRUE(film != nullptr &&
-                        strcmp(film->movie_title, "Огонь") == 0 &&
-                        film->year_of_issue == 2020 &&
-                        strcmp(film->genre, "драма") == 0 &&
-                        is_equal(film->average_rating, 7.7));
+    EXPECT_NE(nullptr, film);
+    EXPECT_STREQ("Огонь", film->movie_title);
+    EXPECT_EQ(2020, film->year_of_issue);
+    EXPECT_STREQ("драма", film->genre);
+    EXPECT_FLOAT_EQ(7.7f, film->average_rating);
     free_film(film);
     fclose(fp);
 }

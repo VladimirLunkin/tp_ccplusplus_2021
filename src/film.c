@@ -1,6 +1,5 @@
 #include "film/film.h"
 #include "string/string.h"
-
 #include <stdlib.h>
 #include <string.h>
 
@@ -38,7 +37,6 @@ film_t *create_film(char *movie_title, unsigned short year_of_issue, char *genre
 
     return film;
 }
-
 film_t *create_and_copy(film_t *film) {
     if (film == NULL) {
         return NULL;
@@ -46,7 +44,6 @@ film_t *create_and_copy(film_t *film) {
 
     return create_film(film->movie_title, film->year_of_issue, film->genre, film->average_rating);
 }
-
 film_t *read_film_from_file(FILE *fp) {
     if (fp == NULL) {
         return NULL;
@@ -85,19 +82,21 @@ film_t *read_film_from_file(FILE *fp) {
 
     return film;
 }
-
 int print_film(FILE *fp, film_t *film) {
     if (fp == NULL || film == NULL) {
         return 1;
     }
 
-    if (fprintf(fp, "%s\t%hu\t%s\t%f\n", film->movie_title,
-               film->year_of_issue, film->genre, film->average_rating) < 0) {
+    if (fprintf(fp, "Название: %s\nГод выпуска: %hu\nЖанр: %s\nРейтинг: %2.1f\n\n",
+                film->movie_title,
+                film->year_of_issue,
+                film->genre,
+                film->average_rating) < 0) {
         return 1;
     }
+
     return 0;
 }
-
 int free_film(film_t *film) {
     if (film == NULL) {
         return 1;
@@ -106,5 +105,6 @@ int free_film(film_t *film) {
     free(film->movie_title);
     free(film->genre);
     free(film);
+
     return 0;
 }

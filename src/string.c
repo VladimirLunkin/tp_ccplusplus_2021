@@ -1,6 +1,7 @@
 #include "string/string.h"
 #include <stdlib.h>
 
+
 string_t *create_string() {
     string_t *str = malloc(sizeof(string_t));
     if (str == NULL) {
@@ -19,7 +20,6 @@ string_t *create_string() {
 
     return str;
 }
-
 int free_string(string_t *str) {
     if (str == NULL) {
         return 1;
@@ -30,7 +30,6 @@ int free_string(string_t *str) {
 
     return 0;
 }
-
 int add_symbol(string_t *str, char symbol) {
     if (str == NULL) {
         return 1;
@@ -47,7 +46,6 @@ int add_symbol(string_t *str, char symbol) {
 
     return 0;
 }
-
 int resize(string_t *str) {
     if (str == NULL) {
         return 1;
@@ -63,7 +61,6 @@ int resize(string_t *str) {
 
     return 0;
 }
-
 int clear_string(string_t *str) {
     if (str == NULL) {
         return 1;
@@ -74,7 +71,6 @@ int clear_string(string_t *str) {
 
     return 0;
 }
-
 int read_str(FILE *fp, string_t *str) {
     if (fp == NULL || str == NULL) {
         return 1;
