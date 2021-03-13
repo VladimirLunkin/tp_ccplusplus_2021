@@ -1,11 +1,10 @@
 #include "gtest/gtest.h"
+#include <cmath>
+#include <limits>
 
 extern "C" {
 #include "film/film.h"
 }
-
-#include <cmath>
-#include <limits>
 
 
 bool is_equal(float x, float y) {

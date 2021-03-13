@@ -1,10 +1,10 @@
 #ifndef INCLUDE_FILM_QUERIES_H_
 #define INCLUDE_FILM_QUERIES_H_
 
-#include "film/film.h"
+#include "film/films.h"
 
-film_t **rating_range(film_t **, size_t *, float, float);
-film_t **genre_of_films(film_t **, size_t *, const char *);
-film_t **year_of_issue_of_films(film_t **, size_t *, unsigned short);
+films_t *rating_range(films_t *, float, float);
+films_t *genre_of_films(films_t *, const char *);
+films_t *year_of_films(films_t *, unsigned short);
 
 #endif  // INCLUDE_FILM_QUERIES_H_
