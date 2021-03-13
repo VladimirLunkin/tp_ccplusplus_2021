@@ -34,8 +34,24 @@ TEST(create_film, correct_arguments) {
     unsigned short year_of_issue = 2020;
     char genre[] = "драма";
     float average_rating = 7.7;
-    char data[] = "Огонь 2020 драма 7.7";
     film_t *film = create_film(movie_title, year_of_issue, genre, average_rating);
+    EXPECT_TRUE(strcmp(film->movie_title, movie_title) == 0 &&
+                film->year_of_issue == year_of_issue &&
+                strcmp(film->genre, genre) == 0 &&
+                is_equal(film->average_rating, average_rating));
+    free_film(film);
+}
+
+TEST(create_and_copy, null_arguments) {
+    EXPECT_EQ(nullptr, create_and_copy(nullptr));
+}
+TEST(create_and_copy, correct_arguments) {
+    char movie_title[] = "Огонь";
+    unsigned short year_of_issue = 2020;
+    char genre[] = "драма";
+    float average_rating = 7.7;
+    film_t film_for_copy = {movie_title, year_of_issue, genre, average_rating};
+    film_t *film = create_and_copy(&film_for_copy);
     EXPECT_TRUE(strcmp(film->movie_title, movie_title) == 0 &&
                 film->year_of_issue == year_of_issue &&
                 strcmp(film->genre, genre) == 0 &&

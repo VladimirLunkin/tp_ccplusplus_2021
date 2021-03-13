@@ -39,6 +39,14 @@ film_t *create_film(char *movie_title, unsigned short year_of_issue, char *genre
     return film;
 }
 
+film_t *create_and_copy(film_t *film) {
+    if (film == NULL) {
+        return NULL;
+    }
+
+    return create_film(film->movie_title, film->year_of_issue, film->genre, film->average_rating);
+}
+
 film_t *read_film_from_file(FILE *fp) {
     if (fp == NULL) {
         return NULL;
