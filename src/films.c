@@ -4,7 +4,7 @@
 
 
 int read_films_from_file(FILE *fp, film_t ***films, size_t *size) {
-    if (fp == NULL) {
+    if (fp == NULL || films == NULL || size == NULL) {
         return 1;
     }
 
