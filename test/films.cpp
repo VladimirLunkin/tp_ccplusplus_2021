@@ -57,6 +57,14 @@ TEST(read_films_from_file, correct_arguments) {
 TEST(print_films, null_arguments) {
     ASSERT_EQ(1, print_films(nullptr, nullptr));
 }
+TEST(print_films, wrong_arguments) {
+    FILE *fp = fopen(SOURCE_DIR"/data/db_2", "r");
+    films_t *films = read_films_from_file(fp);
+
+    EXPECT_EQ(1, print_films(fp, films));
+
+    free_films(films);
+}
 TEST(print_films, correct_arguments) {
     FILE *fp = fopen(SOURCE_DIR"/data/db_2", "r");
     films_t *films = read_films_from_file(fp);
@@ -136,4 +144,21 @@ TEST(add_film_to_films, correct_arguments) {
     free_film(film);
     free_films(films);
     fclose(fp);
+}
+
+TEST(open_db_films, null_arguments) {
+    ASSERT_EQ(nullptr, open_db_films(nullptr));
+}
+TEST(open_db_films, miss_path) {
+    EXPECT_EQ(nullptr, open_db_films("asd"));
+}
+TEST(open_db_films, wrong_file) {
+    EXPECT_EQ(nullptr, open_db_films(SOURCE_DIR"/wrong_data/db_2"));
+}
+TEST(open_db_films, correct_arguments) {
+    films_t *films_db = open_db_films(SOURCE_DIR"/data/db_2");
+
+    EXPECT_NE(nullptr, films_db);
+
+    free_films(films_db);
 }

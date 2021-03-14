@@ -1,37 +1,41 @@
-#include "film/queries.h"
+#include "list_of_films/list_of_films.h"
+#include "string/string.h"
 #include <stdio.h>
 
-
 int main() {
-    FILE *fp = fopen(SOURCE_DIR"/test/data/db_2", "r");
-    films_t *films = read_films_from_file(fp);
+    printf("Введи путь к списку фильмов\n");
+    string_t *file_path = create_string();
+    if (read_str(stdin, file_path) != 0) {
+        return 1;
+    }
 
-    films_t *films_query = NULL;
+    printf("Введи нижнюю границу рейтинга\n");
+    float low;
+    scanf("%f", &low);
 
-    char *genre = "фантастика";
-    films_query = genre_of_films(films, genre);
-    printf("Жанр: %s\n", genre);
-    print_films(stdout, films_query);
-    printf("\n\n");
-    free_films(films_query);
+    printf("Введи верхнюю границу рейтинга\n");
+    float high;
+    scanf("%f", &high);
 
-    float l = 7.0f;
-    float h = 7.9f;
-    films_query = rating_range(films, l, h);
-    printf("Рейтинг от %2.1f до %2.1f: \n", l, h);
-    print_films(stdout, films_query);
-    printf("\n\n");
-    free_films(films_query);
+    printf("Введи жанр кинофильма\n");
+    string_t *genre = create_string();
+    if (read_str(stdin, genre) != 0) {
+        free_string(file_path);
+        return 1;
+    }
 
-    unsigned short date = 2020;
-    films_query = year_of_films(films, date);
-    printf("Дата выпуска: %hu\n", date);
-    print_films(stdout, films_query);
-    printf("\n\n");
-    free_films(films_query);
+    printf("Введи год выпуска\n");
+    unsigned short year;
+    scanf("%hu", &year);
 
-    free_films(films);
-    fclose(fp);
+    if (print_list_of_films(file_path->str, low, high, genre->str, year) != 0) {
+        free_string(file_path);
+        free_string(genre);
+        return 1;
+    }
+
+    free_string(file_path);
+    free_string(genre);
 
     return 0;
 }

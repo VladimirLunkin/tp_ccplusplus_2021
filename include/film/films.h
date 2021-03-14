@@ -12,6 +12,7 @@ typedef struct {
 
 films_t *create_films(size_t);
 films_t *read_films_from_file(FILE *);
+films_t *open_db_films(const char *);
 int print_films(FILE *, films_t *);
 int free_films(films_t *);
 int add_film_to_films(films_t *, film_t *);

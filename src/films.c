@@ -46,6 +46,24 @@ films_t *read_films_from_file(FILE *fp) {
 
     return films;
 }
+films_t *open_db_films(const char *file_path) {
+    if (file_path == NULL) {
+        return NULL;
+    }
+
+    FILE *fp_in = fopen(file_path, "r");
+    if (fp_in == NULL) {
+        return NULL;
+    }
+
+    films_t *films_db = read_films_from_file(fp_in);
+    fclose(fp_in);
+    if (films_db == NULL) {
+        return NULL;
+    }
+
+    return films_db;
+}
 int print_films(FILE *fp, films_t *films) {
     if (fp == NULL || films == NULL) {
         return 1;
