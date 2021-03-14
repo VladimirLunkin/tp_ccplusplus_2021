@@ -57,3 +57,13 @@ films_t *year_of_films(films_t *films, unsigned short year_of_issue) {
 
     return films_resp;
 }
+films_t *all_criteria(films_t *films, float low, float high, const char *genre, unsigned short year) {
+    films_t *films_resp_1 = rating_range(films, low, high);
+    films_t *films_resp_2 = genre_of_films(films_resp_1, genre);
+    films_t *films_resp_3 = year_of_films(films_resp_2, year);
+
+    free_films(films_resp_2);
+    free_films(films_resp_1);
+
+    return films_resp_3;
+}

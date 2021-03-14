@@ -122,3 +122,30 @@ TEST_F(TestQueries, year_of_films_correct_arguments) {
     free_films(ans_films);
     free_films(expected_films);
 }
+
+TEST_F(TestQueries, all_criteria_null_arguments) {
+    ASSERT_EQ(nullptr, all_criteria(nullptr, 0, 0, nullptr, 0));
+}
+TEST_F(TestQueries, all_criteria_wrong_arguments) {
+    EXPECT_EQ(nullptr, all_criteria(films, 10, 1, "qwd", 100));
+}
+TEST_F(TestQueries, all_criteria_miss_range) {
+    films_t *ans_films = all_criteria(films, 1, 10, "боевиК", 2000);
+    EXPECT_NE(nullptr, ans_films);
+
+    EXPECT_TRUE(cmp_films(empty_films, ans_films));
+
+    free_films(ans_films);
+}
+TEST_F(TestQueries, all_criteria_correct_arguments) {
+    FILE *ans_fp = fopen(SOURCE_DIR"/data/res/all_criteria", "r");
+    films_t *expected_films = read_films_from_file(ans_fp);
+
+    films_t *ans_films = all_criteria(films, 7, 9, "фантастика", 2021);
+    EXPECT_NE(nullptr, ans_films);
+
+    EXPECT_TRUE(cmp_films(expected_films, ans_films));
+
+    free_films(ans_films);
+    free_films(expected_films);
+}
