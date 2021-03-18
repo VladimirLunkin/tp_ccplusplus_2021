@@ -1,4 +1,5 @@
-
+[![Build Status](https://travis-ci.com/VladimirLunkin/tp_ccplusplus_2021.svg?branch=hw-2)](https://travis-ci.com/VladimirLunkin/tp_ccplusplus_2021)
+[![codecov](https://codecov.io/gh/VladimirLunkin/tp_ccplusplus_2021/branch/hw-2/graph/badge.svg?token=Q0QEHMJTY3)](https://codecov.io/gh/VladimirLunkin/tp_ccplusplus_2021)
 
 ## Домашнее задание №2: ИЗ №2
 
