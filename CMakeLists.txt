@@ -8,6 +8,31 @@ set(CMAKE_CXX_FLAGS "-Wall -Werror -Wpedantic -fprofile-arcs -ftest-coverage")
 # </Flags>
 
 
+# <Add libraries>
+option(PARALLEL "parallel implementation" OFF)
+
+set(SUM_PATH ${PROJECT_SOURCE_DIR}/sum_lib)
+
+if (PARALLEL)
+    set(SUM "sum_parallel")
+    set(SUM_PARALLEL_LIB
+            ${SUM_PATH}/include/sum.h
+            ${SUM_PATH}/src_parallel/sum.c)
+
+    add_library(${SUM}_lib SHARED ${SUM_PARALLEL_LIB})
+else()
+    set(SUM "sum_consistently")
+    set(SUM_CONSISTENTLY_LIB
+            ${SUM_PATH}/include/sum.h
+            ${SUM_PATH}/src_consistently/sum.c)
+
+    add_library(${SUM}_lib STATIC ${SUM_CONSISTENTLY_LIB})
+endif (PARALLEL)
+
+target_include_directories(${SUM}_lib PUBLIC ${SUM_PATH}/include)
+# </Add libraries>
+
+
 # <Test>
 configure_file(CMakeLists.txt.in
         googletest-download/CMakeLists.txt)
@@ -24,17 +49,6 @@ add_subdirectory(tests)
 # </Test>
 
 
-# <Add libraries>
-option(PARALLEL "parallel implementation" OFF)
-
-if (PARALLEL)
-    add_subdirectory(sum/cmake_parallel)
-else()
-    add_subdirectory(sum/cmake_consistently)
-endif (PARALLEL)
-# </Add libraries>
-
-
 # <Source>
 include_directories("${PROJECT_SOURCE_DIR}/metrics/include")
 
@@ -48,11 +62,7 @@ add_executable(${PROJECT_NAME} ${sources})
 
 
 # <Link libraries>
-if (PARALLEL)
-    target_link_libraries(${PROJECT_NAME} PRIVATE sum_parallel_lib)
-else()
-    target_link_libraries(${PROJECT_NAME} PRIVATE sum_consistently_lib)
-endif (PARALLEL)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${SUM}_lib)
 # </Link libraries>
 
 
