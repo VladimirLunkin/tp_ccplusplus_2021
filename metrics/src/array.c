@@ -28,15 +28,18 @@ array_t *arr_read_from_file(char *file_path) {
     }
 
     size_t capacity = 0;
-    if (fscanf(fp, "%zu", &capacity)) {
+    if (fscanf(fp, "%zu", &capacity) != 1) {
         fclose(fp);
         return NULL;
     }
 
     array_t *arr = create_arr(capacity);
+    if (arr == NULL) {
+        return NULL;
+    }
 
     for (int i = 0; i < capacity; ++i) {
-        if (fscanf(fp, "%d", &arr->arr[i])) {
+        if (fscanf(fp, "%d", &arr->arr[i]) != 1) {
             free_arr(arr);
             fclose(fp);
             return NULL;
