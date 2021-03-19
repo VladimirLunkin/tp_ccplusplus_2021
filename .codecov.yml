@@ -1,4 +1,4 @@
 ignore:
   - "generator"
-  - "metrics"
+  - "metrics/src/main.c"
   - "tests"
