@@ -9,7 +9,7 @@ typedef struct {
 } array_t;
 
 array_t *create_arr(size_t);
-array_t *arr_read_from_file(char *);
+array_t *arr_read_from_file(const char *);
 int free_arr(array_t *);
 
 #endif  // METRICS_INCLUDE_ARRAY_H_

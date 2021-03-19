@@ -18,7 +18,7 @@ array_t *create_arr(size_t capacity) {
 
     return arr;
 }
-array_t *arr_read_from_file(char *file_path) {
+array_t *arr_read_from_file(const char *file_path) {
     if (file_path == NULL) {
         return NULL;
     }
