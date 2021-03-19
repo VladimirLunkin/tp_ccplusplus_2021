@@ -1,10 +1,13 @@
 include_directories("${PROJECT_SOURCE_DIR}/sum_lib/include")
-
 if (PARALLEL)
     file(GLOB sources "${PROJECT_SOURCE_DIR}/sum_lib/src_parallel/*.c")
 else()
     file(GLOB sources "${PROJECT_SOURCE_DIR}/sum_lib/src_consistently/*.c")
 endif (PARALLEL)
+
+include_directories("${PROJECT_SOURCE_DIR}/metrics/include")
+file(GLOB sources "${sources}" "${PROJECT_SOURCE_DIR}/metrics/src/*.c")
+list(REMOVE_ITEM sources "${PROJECT_SOURCE_DIR}/metrics/src/main.c")
 
 file(GLOB tests "${PROJECT_SOURCE_DIR}/tests/*.cpp")
 list(REMOVE_ITEM tests "${PROJECT_SOURCE_DIR}/tests/main.cpp")
