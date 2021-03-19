@@ -1,5 +1,10 @@
 #include "sum.h"
 
-int sum(int l, int r) {
-    return l + r;
+
+int64_t sum(const int *arr, size_t size) {
+    if (arr == NULL) {
+        return 0;
+    }
+
+    return size;
 }
