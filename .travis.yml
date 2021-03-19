@@ -17,7 +17,9 @@ script:
   - mkdir build && cd build
   - cmake ..
   - make clean && make
-  - python3 ../generator/number_generator.py
+  - cd ../generator
+  - python3 number_generator.py
+  - cd ../build
   - valgrind --tool=memcheck --leak-check=full ctest
   - ./hw-2
   - cmake -DPARALLEL=ON ..

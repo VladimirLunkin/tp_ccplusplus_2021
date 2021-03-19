@@ -4,3 +4,5 @@
 # CMake
 cmake-build-*/
 build/
+
+generator/data*
