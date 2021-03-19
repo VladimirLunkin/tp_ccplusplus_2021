@@ -10,6 +10,7 @@ array_t *create_arr(size_t capacity) {
 
     arr->arr = calloc(capacity, sizeof(int));
     if (arr->arr == NULL) {
+        free(arr);
         return NULL;
     }
 
@@ -35,6 +36,7 @@ array_t *arr_read_from_file(char *file_path) {
 
     array_t *arr = create_arr(capacity);
     if (arr == NULL) {
+        fclose(fp);
         return NULL;
     }
 

@@ -19,11 +19,11 @@ script:
   - make clean && make
   - python3 ../generator/number_generator.py
   - valgrind --tool=memcheck --leak-check=full ctest
-  - valgrind --tool=memcheck --leak-check=full ./hw-2
+  - ./hw-2
   - cmake -DPARALLEL=ON ..
   - make clean && make
   - valgrind --tool=memcheck --leak-check=full ctest
-  - valgrind --tool=memcheck --leak-check=full ./hw-2
+  - ./hw-2
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

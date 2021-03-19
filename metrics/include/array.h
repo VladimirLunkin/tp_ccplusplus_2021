@@ -1,5 +1,5 @@
-#ifndef HW_2_ARRAY_H
-#define HW_2_ARRAY_H
+#ifndef METRICS_INCLUDE_ARRAY_H_
+#define METRICS_INCLUDE_ARRAY_H_
 
 #include <stdlib.h>
 
@@ -12,4 +12,4 @@ array_t *create_arr(size_t);
 array_t *arr_read_from_file(char *);
 int free_arr(array_t *);
 
-#endif //HW_2_ARRAY_H
+#endif  // METRICS_INCLUDE_ARRAY_H_
