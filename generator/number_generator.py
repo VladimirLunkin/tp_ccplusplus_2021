@@ -4,7 +4,6 @@ from random import randint
 file = open("data.txt", "w")
 
 quantity = 100_000_000
-# quantity = 100
 max_num = 10_000
 
 file.write(str(quantity) + '\n')
