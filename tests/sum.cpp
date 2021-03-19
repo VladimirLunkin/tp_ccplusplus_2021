@@ -4,6 +4,6 @@ extern "C" {
 #include "sum.h"
 }
 
-TEST(sum, correct_arguments) {
-    ASSERT_EQ(15, sum(5, 10));
+TEST(sum, null_arguments) {
+    ASSERT_EQ(0, sum(nullptr, 0));
 }

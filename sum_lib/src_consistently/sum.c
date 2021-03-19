@@ -3,7 +3,7 @@
 
 int64_t sum(const int *arr, size_t size) {
     if (arr == NULL) {
-        return 1;
+        return 0;
     }
 
     int64_t sum = 0;
