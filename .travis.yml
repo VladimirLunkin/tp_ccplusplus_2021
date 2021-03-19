@@ -22,10 +22,10 @@ script:
   - cd ../build
   - valgrind --tool=memcheck --leak-check=full ctest
   - ./hw-2
-  - cmake -DPARALLEL=ON ..
-  - make clean && make
-  - valgrind --tool=memcheck --leak-check=full ctest
-  - ./hw-2
+#  - cmake -DPARALLEL=ON ..
+#  - make clean && make
+#  - valgrind --tool=memcheck --leak-check=full ctest
+#  - ./hw-2
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
