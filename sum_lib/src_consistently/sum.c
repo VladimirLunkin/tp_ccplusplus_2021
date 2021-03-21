@@ -1,18 +1,19 @@
 #include "sum.h"
 
 
-int64_t sum(const int *arr, size_t size) {
+int calculate_sum(const int *arr, size_t size, int64_t *sum) {
     if (arr == NULL) {
-        return 0;
+        return 1;
     }
 
-    int64_t sum = 0;
+    *sum = 0;
 
-    for (int k = 1; k <= 10; ++k) {
-        for (int i = 0; k + 10 * i < size; ++i) {
-            sum += arr[k + 10 * i];
+    int i_end = (int)(size / 10) - 1;
+    for (int i = 0; i <= i_end; ++i) {
+        for (int k = 1; k < 10 || (k == 10 && i != i_end); ++k) {
+            *sum += arr[k + 10 * i];
         }
     }
 
-    return sum;
+    return 0;
 }
