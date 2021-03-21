@@ -17,7 +17,9 @@ if (PARALLEL)
     set(SUM "sum_parallel")
     set(SUM_PARALLEL_LIB
             ${SUM_PATH}/include/sum.h
-            ${SUM_PATH}/src_parallel/sum.c)
+            ${SUM_PATH}/include/pipes.h
+            ${SUM_PATH}/src_parallel/sum.c
+            ${SUM_PATH}/src_parallel/pipes.c)
 
     add_library(${SUM}_lib SHARED ${SUM_PARALLEL_LIB})
 else()

@@ -2,15 +2,15 @@
 
 
 int calculate_sum(const int *arr, size_t size, int64_t *sum) {
-    if (arr == NULL) {
+    if (arr == NULL || sum == NULL || size < 1) {
         return 1;
     }
 
     *sum = 0;
 
-    int i_end = (int)(size / 10) - 1;
-    for (int i = 0; i <= i_end; ++i) {
-        for (int k = 1; k < 10 || (k == 10 && i != i_end); ++k) {
+    size_t i_end = (int)((size - 1) / 10);
+    for (size_t i = 0; i <= i_end; ++i) {
+        for (size_t k = 0; k < 10 && k + 10 * i < size; ++k) {
             *sum += arr[k + 10 * i];
         }
     }

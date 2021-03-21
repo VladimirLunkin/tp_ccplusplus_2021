@@ -18,9 +18,9 @@ TEST(free_arr, null_arguments) {
     ASSERT_EQ(1, free_arr(nullptr));
 }
 TEST(free_arr, correct_arguments) {
-    array_t *arr = new array_t;
+    array_t *arr = (array_t*)malloc(sizeof(array_t));
     arr->capacity = 5;
-    arr->arr = new int[arr->capacity];
+    arr->arr = (int*)calloc(arr->capacity, sizeof(int));
     std::fill_n(arr->arr, arr->capacity, 13);
     ASSERT_EQ(0, free_arr(arr));
 }
