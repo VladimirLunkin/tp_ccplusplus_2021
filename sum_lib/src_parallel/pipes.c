@@ -32,7 +32,7 @@ int byte_char_to_int(const char *str, int64_t *num) {
 }
 
 pipes_t *create_pipes(size_t num_pipes) {
-    pipes_t *pipes = malloc(sizeof(pipes_t*));
+    pipes_t *pipes = malloc(sizeof(pipes_t));
     if (pipes == NULL) {
         return NULL;
     }

@@ -85,7 +85,7 @@ int calculate_sum(const int *arr, size_t size, int64_t *sum) {
     current_proc = 0;
     for (; current_proc < num_cores; ++current_proc) {
         pid = wait(&status);
-        printf("proc_%zu STATUS: %d\n", current_proc, status);
+        printf("proc_%zu pid=%d STATUS: %d\n", current_proc, pid, status);
         // проверить статус
     }
 

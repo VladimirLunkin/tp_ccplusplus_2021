@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 int main() {
-    array_t *arr = arr_read_from_file(SOURCE_DIR"/generator/data1.txt");
+    array_t *arr = arr_read_from_file(SOURCE_DIR"/generator/data.txt");
     if (arr == NULL) {
         return 1;
     }

@@ -12,8 +12,7 @@ install:
   - sudo pip install cpplint
 
 script:
-  - cppcheck --enable=all --language=c sum_lib/*/* metrics/*/* --suppress=missingInclude
-  - cpplint --extensions=c sum_lib/*/* metrics/*/*
+  - sh ./linters.sh
   - mkdir build && cd build
   - cmake ..
   - make clean && make
@@ -22,10 +21,10 @@ script:
   - cd ../build
   - valgrind --tool=memcheck --leak-check=full ctest
   - ./hw-2
-#  - cmake -DPARALLEL=ON ..
-#  - make clean && make
-#  - valgrind --tool=memcheck --leak-check=full ctest
-#  - ./hw-2
+  - cmake -DPARALLEL=ON ..
+  - make clean && make
+  - valgrind --tool=memcheck --leak-check=full ctest
+  - ./hw-2
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
