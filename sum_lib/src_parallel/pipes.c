@@ -113,7 +113,7 @@ int close_write_pipes(pipes_t *pipes) {
 
     return 0;
 }
-int close_pipes_read(pipes_t *pipes, size_t do_not_close) {
+int close_read_pipes(pipes_t *pipes, size_t do_not_close) {
     if (pipes == NULL) {
         return 1;
     }

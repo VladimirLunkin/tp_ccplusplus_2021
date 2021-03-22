@@ -27,7 +27,7 @@ int sum_range(const int *arr, size_t begin, size_t size, int64_t *sum) {
 }
 
 int calculate_sum(const int *arr, size_t size, int64_t *sum) {
-    if (arr == NULL || sum == NULL) {
+    if (arr == NULL || sum == NULL || size < 1) {
         return 1;
     }
 
@@ -56,7 +56,7 @@ int calculate_sum(const int *arr, size_t size, int64_t *sum) {
     }
 
     if (pid == 0) {
-        if (close_pipes_read(pipes, current_proc) != 0) {
+        if (close_read_pipes(pipes, current_proc) != 0) {
             exit(EXIT_FAILURE);
         }
 
