@@ -5,7 +5,7 @@ static const int byte_in_number = 8;
 static inline u_int8_t get_byte(int64_t num, int rank) {
     return (num >> (rank * byte_in_number)) & 0xFF;
 }
-int int_to_byte_char(int64_t num, char *str) {
+static inline int int_to_byte_char(int64_t num, char *str) {
     if (str == NULL) {
         return 1;
     }
@@ -17,8 +17,8 @@ int int_to_byte_char(int64_t num, char *str) {
 
     return 0;
 }
-int byte_char_to_int(const char *str, int64_t *num) {
-    if (str == NULL) {
+static inline int byte_char_to_int(const char *str, int64_t *num) {
+    if (str == NULL || num == NULL) {
         return 1;
     }
 
@@ -102,7 +102,7 @@ int read_pipe(pipes_t *pipes, size_t num_pipe, int64_t *num) {
 
     return 0;
 }
-int close_write_pipes(pipes_t *pipes) {
+int close_all_write_pipes(pipes_t *pipes) {
     if (pipes == NULL || pipes->fd == NULL) {
         return 1;
     }
@@ -113,8 +113,8 @@ int close_write_pipes(pipes_t *pipes) {
 
     return 0;
 }
-int close_read_pipes(pipes_t *pipes, size_t do_not_close) {
-    if (pipes == NULL) {
+int close_all_except_write_pipe(pipes_t *pipes, size_t do_not_close) {
+    if (pipes == NULL || pipes->fd == NULL) {
         return 1;
     }
 
