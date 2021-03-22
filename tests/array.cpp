@@ -15,7 +15,7 @@ bool cmp_arr(int *arr1, int *arr2, ssize_t size) {
 }
 
 TEST(free_arr, null_arguments) {
-    ASSERT_EQ(1, free_arr(nullptr));
+    ASSERT_NE(0, free_arr(nullptr));
 }
 TEST(free_arr, correct_arguments) {
     array_t *arr = (array_t*)malloc(sizeof(array_t));

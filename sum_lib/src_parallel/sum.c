@@ -51,12 +51,12 @@ int calculate_sum(const int *arr, size_t size, int64_t *sum) {
         }
     }
 
-    if (pid != 0 && close_write_pipes(pipes) != 0) {
+    if (pid != 0 && close_all_write_pipes(pipes) != 0) {
         return 1;
     }
 
     if (pid == 0) {
-        if (close_read_pipes(pipes, current_proc) != 0) {
+        if (close_all_except_write_pipe(pipes, current_proc) != 0) {
             exit(EXIT_FAILURE);
         }
 
