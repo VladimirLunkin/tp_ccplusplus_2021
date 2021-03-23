@@ -22,7 +22,7 @@ script:
   - valgrind --tool=memcheck --leak-check=full ctest
   - cmake -DPARALLEL=ON ..
   - make clean && make
-  - valgrind --tool=memcheck --leak-check=full ctest
+  - valgrind --tool=memcheck --leak-check=full ./tests/sum_tests
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
