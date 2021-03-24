@@ -14,6 +14,7 @@ int main() {
     clock_t begin = clock();
 
     if (calculate_sum(arr->arr, arr->capacity, &sum) != 0) {
+        free_arr(arr);
         return 1;
     }
 
