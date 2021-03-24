@@ -5,5 +5,4 @@
 cmake-build-*/
 build/
 
-generator/
 *data.txt

@@ -2,7 +2,6 @@
 
 extern "C" {
 #include "sum.h"
-#include "array.h"
 }
 
 TEST(sum, null_arguments) {
@@ -58,10 +57,11 @@ TEST(sum, array_size_235412) {
 }
 
 TEST(sum, array_size_100000000) {
-    array_t *arr = arr_read_from_file(SOURCE_DIR"/data/data.txt");
+    const ssize_t Size = 100000000;
+    int *arr = new int[Size];
+    std::fill_n(arr, Size, 1);
     int64_t sum = 0;
 
-    EXPECT_EQ(0, calculate_sum(arr->arr, arr->capacity, &sum));
-
-    free_arr(arr);
+    EXPECT_EQ(0, calculate_sum(arr, Size, &sum));
+    EXPECT_EQ(100000000, sum);
 }

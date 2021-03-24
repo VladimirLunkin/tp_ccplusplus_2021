@@ -15,14 +15,15 @@ script:
   - sh ./linters.sh
   - mkdir build && cd build
   - cmake ..
-  - make clean && make
-  - cd ../tests/data
-  - python3 number_generator.py
-  - cd ../../build
+  - make
   - valgrind --tool=memcheck --leak-check=full ctest
   - cmake -DPARALLEL=ON ..
-  - make clean && make
-  - valgrind --tool=memcheck --leak-check=full ./tests/sum_tests
+  - make
+  - valgrind --tool=memcheck --leak-check=full ctest
+  - cd ../generator
+  - python3 number_generator.py
+  - cd ../build
+  - ./hw-2
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
