@@ -3,6 +3,6 @@
 
 #include <stdlib.h>
 
-int calculate_sum(const int *, size_t, int64_t *);
+int calculate_sum(const int *arr, size_t size, int64_t *sum);
 
 #endif  // SUM_LIB_INCLUDE_SUM_H_
