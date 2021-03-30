@@ -4,8 +4,14 @@
 #include <stdio.h>
 
 int main() {
-    array_t *arr = arr_read_from_file(SOURCE_DIR"/generator/data.txt");
-    if (arr == NULL) {
+    FILE *fp = fopen(SOURCE_DIR"/generator/data.txt", "r");
+    if (fp == NULL) {
+        return 1;
+    }
+
+    array_t array = create_arr(0);
+    if (arr_read(fp, &array)) {
+        fclose(fp);
         return 1;
     }
 
@@ -13,8 +19,9 @@ int main() {
 
     clock_t begin = clock();
 
-    if (calculate_sum(arr->arr, arr->capacity, &sum) != 0) {
-        free_arr(arr);
+    if (calculate_sum(array.arr, array.capacity, &sum) != 0) {
+        free_arr(&array);
+        fclose(fp);
         return 1;
     }
 
@@ -24,7 +31,8 @@ int main() {
     printf("Результат работы: %ld\n", sum);
     printf("Время работы программы: %lf с\n", time_spent);
 
-    free_arr(arr);
+    free_arr(&array);
+    fclose(fp);
 
     return 0;
 }

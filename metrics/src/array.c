@@ -2,64 +2,51 @@
 #include <stdio.h>
 
 
-array_t *create_arr(size_t capacity) {
-    array_t *arr = malloc(sizeof(array_t));
-    if (arr == NULL) {
-        return NULL;
+array_t create_arr(size_t capacity) {
+    array_t array = {NULL, 0};
+
+    array.arr = calloc(capacity, sizeof(int));
+    if (array.arr == NULL) {
+        return array;
     }
 
-    arr->arr = calloc(capacity, sizeof(int));
-    if (arr->arr == NULL) {
-        free(arr);
-        return NULL;
-    }
+    array.capacity = capacity;
 
-    arr->capacity = capacity;
-
-    return arr;
+    return array;
 }
-array_t *arr_read_from_file(const char *file_path) {
-    if (file_path == NULL) {
-        return NULL;
-    }
-
-    FILE *fp = fopen(file_path, "r");
-    if (fp == NULL) {
-        return NULL;
-    }
-
-    size_t capacity = 0;
-    if (fscanf(fp, "%zu", &capacity) != 1) {
-        fclose(fp);
-        return NULL;
-    }
-
-    array_t *arr = create_arr(capacity);
-    if (arr == NULL) {
-        fclose(fp);
-        return NULL;
-    }
-
-    for (int i = 0; i < capacity; ++i) {
-        if (fscanf(fp, "%d", &arr->arr[i]) != 1) {
-            free_arr(arr);
-            fclose(fp);
-            return NULL;
-        }
-    }
-    arr->capacity = capacity;
-
-    fclose(fp);
-
-    return arr;
-}
-int free_arr(array_t *arr) {
-    if (arr == NULL) {
+int arr_read(FILE *fp, array_t *array) {
+    if (fp == NULL || array == NULL) {
         return 1;
     }
 
-    free(arr->arr);
-    free(arr);
+    free_arr(array);
+
+    size_t capacity = 0;
+    if (fscanf(fp, "%zu", &capacity) != 1) {
+        return 1;
+    }
+
+    *array = create_arr(capacity);
+
+    for (int i = 0; i < capacity; ++i) {
+        if (fscanf(fp, "%d", &array->arr[i]) != 1) {
+            free_arr(array);
+            return 1;
+        }
+    }
+    array->capacity = capacity;
+
+    return 0;
+}
+int free_arr(array_t *array) {
+    if (array == NULL) {
+        return 1;
+    }
+
+    free(array->arr);
+
+    array->arr = NULL;
+    array->capacity = 0;
 
     return 0;
 }

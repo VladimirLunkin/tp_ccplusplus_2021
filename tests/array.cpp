@@ -4,7 +4,7 @@ extern "C" {
 #include "array.h"
 }
 
-bool cmp_arr(int *arr1, int *arr2, ssize_t size) {
+bool cmp_arr(const int *arr1, const int *arr2, ssize_t size) {
     for (int i = 0; i < size; ++i) {
         if (arr1[i] != arr2[i]) {
             return false;
@@ -18,53 +18,66 @@ TEST(free_arr, null_arguments) {
     ASSERT_NE(0, free_arr(nullptr));
 }
 TEST(free_arr, correct_arguments) {
-    array_t *arr = (array_t*)malloc(sizeof(array_t));
-    arr->capacity = 5;
-    arr->arr = (int*)calloc(arr->capacity, sizeof(int));
-    std::fill_n(arr->arr, arr->capacity, 13);
-    ASSERT_EQ(0, free_arr(arr));
+    array_t array;
+    array.capacity = 5;
+    array.arr = (int*)calloc(array.capacity, sizeof(int));
+    std::fill_n(array.arr, array.capacity, 13);
+
+    EXPECT_EQ(0, free_arr(&array));
+    EXPECT_EQ(0, array.capacity);
 }
 
 TEST(create_arr, null_arguments) {
-    array_t *arr = create_arr(0);
+    array_t array = create_arr(0);
 
-    EXPECT_NE(nullptr, arr);
-    EXPECT_EQ(0, arr->capacity);
+    EXPECT_NE(nullptr, array.arr);
+    EXPECT_EQ(0, array.capacity);
 
-    free_arr(arr);
+    free_arr(&array);
 }
 TEST(create_arr, correct_arguments) {
-    array_t *arr = create_arr(10);
+    array_t array = create_arr(10);
 
-    EXPECT_NE(nullptr, arr);
-    EXPECT_EQ(10, arr->capacity);
+    EXPECT_NE(nullptr, array.arr);
+    EXPECT_EQ(10, array.capacity);
 
-    free_arr(arr);
+    free_arr(&array);
 }
 
-TEST(arr_read_from_file, null_arguments) {
-    ASSERT_EQ(nullptr, arr_read_from_file(nullptr));
+TEST(arr_read, null_arguments) {
+    ASSERT_NE(0, arr_read(nullptr, nullptr));
 }
-TEST(arr_read_from_file, wrong_path) {
-    const char file_name[] = "qwerty";
-    ASSERT_EQ(nullptr, arr_read_from_file(file_name));
-}
-TEST(arr_read_from_file, miss_data_1) {
+TEST(arr_read, miss_data_1) {
     const char file_name[] = SOURCE_DIR"/data/miss_data_1";
-    ASSERT_EQ(nullptr, arr_read_from_file(file_name));
+    FILE *fp = fopen(file_name, "r");
+
+    array_t array = create_arr(0);
+
+    EXPECT_NE(0, arr_read(fp, &array));
+
+    fclose(fp);
 }
-TEST(arr_read_from_file, miss_data_2) {
+TEST(arr_read, miss_data_2) {
     const char file_name[] = SOURCE_DIR"/data/miss_data_2";
-    ASSERT_EQ(nullptr, arr_read_from_file(file_name));
+    FILE *fp = fopen(file_name, "r");
+
+    array_t array = create_arr(0);
+
+    EXPECT_NE(0, arr_read(fp, &array));
+
+    fclose(fp);
 }
-TEST(arr_read_from_file, data_1) {
+TEST(arr_read, data_1) {
     const char file_name[] = SOURCE_DIR"/data/data_1";
-    array_t *arr = arr_read_from_file(file_name);
+    FILE *fp = fopen(file_name, "r");
+
+    array_t array = create_arr(0);
     int expected_arr[] = {1, 2, 3, 4, 5};
 
-    EXPECT_NE(nullptr, arr);
-    EXPECT_EQ(5, arr->capacity);
-    EXPECT_TRUE(cmp_arr(expected_arr, arr->arr, arr->capacity));
+    EXPECT_EQ(0, arr_read(fp, &array));
+    EXPECT_EQ(5, array.capacity);
+    EXPECT_TRUE(cmp_arr(expected_arr, array.arr, array.capacity));
 
-    free_arr(arr);
+    free_arr(&array);
+    fclose(fp);
 }
