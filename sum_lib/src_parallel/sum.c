@@ -6,7 +6,7 @@
 
 int sum_of_one_proc(const int *arr, size_t size, int64_t *sum) {
     if (arr == NULL || sum == NULL || size < 1) {
-        return 1;
+        return NULL_ARGS;
     }
 
     *sum = 0;
@@ -18,7 +18,7 @@ int sum_of_one_proc(const int *arr, size_t size, int64_t *sum) {
         }
     }
 
-    return 0;
+    return SUCCESS;
 }
 
 int single_proc_handler(size_t proc_number, pipes_t *pipes, const int *arr, size_t size) {
@@ -43,14 +43,14 @@ int single_proc_handler(size_t proc_number, pipes_t *pipes, const int *arr, size
 
 int calculate_sum(const int *arr, size_t size, int64_t *sum) {
     if (arr == NULL || sum == NULL || size < 1) {
-        return 1;
+        return NULL_ARGS;
     }
 
     size_t num_cores = sysconf(_SC_NPROCESSORS_ONLN);
 
     pipes_t *pipes = create_pipes(num_cores);
     if (pipes == NULL) {
-        return 1;
+        return CREATE_PIPES_FAILED;
     }
 
     size_t current_proc = 0;
@@ -59,7 +59,7 @@ int calculate_sum(const int *arr, size_t size, int64_t *sum) {
         int pid = fork();
         if (pid == -1) {
             close_pipes(pipes);
-            return 1;
+            return FORK_FAILED;
         }
         if (pid == 0) {
             if (current_proc + 1 == num_cores) {
@@ -70,16 +70,14 @@ int calculate_sum(const int *arr, size_t size, int64_t *sum) {
         }
     }
 
-    if (close_all_write_pipes(pipes) != 0) {
-        return 1;
-    }
+    close_all_write_pipes(pipes);
 
     int status = 0;
     current_proc = 0;
     for (; current_proc < num_cores; ++current_proc) {
-        if (wait(&status) < 0 || status != EXIT_SUCCESS) {
+        if (wait(&status) < 0 || !WIFEXITED(status)) {
             close_pipes(pipes);
-            return 1;
+            return WAIT_FAILED;
         }
     }
 
@@ -90,7 +88,7 @@ int calculate_sum(const int *arr, size_t size, int64_t *sum) {
 
         if (read_pipe(pipes, current_proc, &small_sum) != 0) {
             close_pipes(pipes);
-            return 1;
+            return READ_PIPE_FAILED;
         }
 
         *sum += small_sum;
@@ -98,5 +96,5 @@ int calculate_sum(const int *arr, size_t size, int64_t *sum) {
 
     close_pipes(pipes);
 
-    return 0;
+    return SUCCESS;
 }

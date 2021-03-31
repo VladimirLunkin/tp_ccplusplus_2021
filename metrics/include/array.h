@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define SUCCESS 0
+#define NULL_ARGS 1
+#define FSCANF_FAILED 2
+
 typedef struct {
     int *arr;
     size_t capacity;

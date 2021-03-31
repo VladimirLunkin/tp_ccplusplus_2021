@@ -3,6 +3,12 @@
 
 #include <stdlib.h>
 
+#define SUCCESS 0
+#define NULL_ARGS 1
+#define MALLOC_FAILED 2
+#define READ_FAILED 3
+#define WRITE_FAILED 4
+
 typedef struct {
     int **fd;
     size_t size;

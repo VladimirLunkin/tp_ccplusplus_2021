@@ -3,7 +3,7 @@
 
 int calculate_sum(const int *arr, size_t size, int64_t *sum) {
     if (arr == NULL || sum == NULL || size < 1) {
-        return 1;
+        return NULL_ARGS;
     }
 
     *sum = 0;
@@ -15,5 +15,5 @@ int calculate_sum(const int *arr, size_t size, int64_t *sum) {
         }
     }
 
-    return 0;
+    return SUCCESS;
 }

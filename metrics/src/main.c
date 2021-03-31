@@ -6,13 +6,13 @@
 int main() {
     FILE *fp = fopen(SOURCE_DIR"/generator/data.txt", "r");
     if (fp == NULL) {
-        return 1;
+        return EXIT_FAILURE;
     }
 
     array_t array = create_arr(0);
     if (arr_read(fp, &array)) {
         fclose(fp);
-        return 1;
+        return EXIT_FAILURE;
     }
 
     int64_t sum = 0;
@@ -22,7 +22,7 @@ int main() {
     if (calculate_sum(array.arr, array.capacity, &sum) != 0) {
         free_arr(&array);
         fclose(fp);
-        return 1;
+        return EXIT_FAILURE;
     }
 
     clock_t end = clock();
@@ -34,5 +34,5 @@ int main() {
     free_arr(&array);
     fclose(fp);
 
-    return 0;
+    return EXIT_SUCCESS;
 }
