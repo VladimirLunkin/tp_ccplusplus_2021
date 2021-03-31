@@ -25,8 +25,7 @@ int metrics(func_sum_t func_sum, array_t array) {
 }
 
 int main() {
-    FILE *fp = fopen(SOURCE_DIR"/generator/data10.txt", "r");
-//    FILE *fp = fopen(SOURCE_DIR"/generator/data.txt", "r");
+    FILE *fp = fopen(SOURCE_DIR"/generator/data.txt", "r");
     if (fp == NULL) {
         return EXIT_FAILURE;
     }
@@ -44,10 +43,8 @@ int main() {
         return EXIT_FAILURE;
     }
 
-    void *library;
-//    library = dlopen(SOURCE_DIR"/cmake-build-consistently/libsum_parallel_lib.so", RTLD_LAZY);
-    library = dlopen(SOURCE_DIR"/build/libsum_parallel_lib.so", RTLD_LAZY);
-    if (!library) {
+    void *library = dlopen(SOURCE_DIR"/build/libsum_parallel_lib.so", RTLD_LAZY);
+    if (library == NULL) {
         free_arr(&array);
         return EXIT_FAILURE;
     }
