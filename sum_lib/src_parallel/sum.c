@@ -4,19 +4,16 @@
 #include <sys/wait.h>
 
 
-int sum_range(const int *arr, size_t begin, size_t end, int64_t *sum) {
-    if (arr == NULL || sum == NULL) {
+int sum_of_one_proc(const int *arr, size_t size, int64_t *sum) {
+    if (arr == NULL || sum == NULL || size < 1) {
         return 1;
     }
 
     *sum = 0;
 
-    size_t i_begin = begin / 10;
-
-    for (size_t i = i_begin; i <= end / 10; ++i) {
-        size_t k = (i != i_begin) ? 0 : begin % 10;
-
-        for (; k < 10 && k + 10 * i < end; ++k) {
+    size_t i_end = (int)((size - 1) / 10);
+    for (size_t i = 0; i <= i_end; ++i) {
+        for (size_t k = 0; k < 10 && k + 10 * i < size; ++k) {
             *sum += arr[k + 10 * i];
         }
     }
@@ -24,13 +21,13 @@ int sum_range(const int *arr, size_t begin, size_t end, int64_t *sum) {
     return 0;
 }
 
-int single_proc_handler(size_t proc_number, pipes_t *pipes, const int *arr, size_t begin, size_t end) {
+int single_proc_handler(size_t proc_number, pipes_t *pipes, const int *arr, size_t size) {
     if (close_all_except_write_pipe(pipes, proc_number) != 0) {
         exit(EXIT_FAILURE);
     }
 
     int64_t sum = 0;
-    sum_range(arr, begin, end, &sum);
+    sum_of_one_proc(arr, size, &sum);
 
     if (write_pipe(pipes, proc_number, sum) != 0) {
         close_pipes(pipes);
@@ -57,18 +54,19 @@ int calculate_sum(const int *arr, size_t size, int64_t *sum) {
     }
 
     size_t current_proc = 0;
-    for (; current_proc < num_cores; ++current_proc) {
+    size_t size_one_proc = (size_t)(size / num_cores);
+    for (const int *arr_begin = arr; current_proc < num_cores; ++current_proc, arr_begin += size_one_proc) {
         int pid = fork();
         if (pid == -1) {
             close_pipes(pipes);
             return 1;
         }
         if (pid == 0) {
-            size_t size_one_proc = (size_t)(size / num_cores);
-            size_t begin = current_proc * size_one_proc;
-            size_t end = (current_proc < num_cores - 1) ? begin + size_one_proc : size;
+            if (current_proc + 1 == num_cores) {
+                size_one_proc = size - current_proc * size_one_proc;
+            }
 
-            single_proc_handler(current_proc, pipes, arr, begin, end);
+            single_proc_handler(current_proc, pipes, arr_begin, size_one_proc);
         }
     }
 
