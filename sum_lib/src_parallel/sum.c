@@ -24,6 +24,26 @@ int sum_range(const int *arr, size_t begin, size_t end, int64_t *sum) {
     return 0;
 }
 
+int single_proc_handler(size_t proc_number, pipes_t *pipes, const int *arr, size_t begin, size_t end) {
+    if (close_all_except_write_pipe(pipes, proc_number) != 0) {
+        exit(EXIT_FAILURE);
+    }
+
+    int64_t sum = 0;
+    sum_range(arr, begin, end, &sum);
+
+    if (write_pipe(pipes, proc_number, sum) != 0) {
+        close_pipes(pipes);
+        exit(EXIT_FAILURE);
+    }
+
+    if (close_pipes(pipes) != 0) {
+        exit(EXIT_FAILURE);
+    }
+
+    exit(EXIT_SUCCESS);
+}
+
 int calculate_sum(const int *arr, size_t size, int64_t *sum) {
     if (arr == NULL || sum == NULL || size < 1) {
         return 1;
@@ -44,26 +64,11 @@ int calculate_sum(const int *arr, size_t size, int64_t *sum) {
             return 1;
         }
         if (pid == 0) {
-            if (close_all_except_write_pipe(pipes, current_proc) != 0) {
-                exit(EXIT_FAILURE);
-            }
-
             size_t size_one_proc = (size_t)(size / num_cores);
             size_t begin = current_proc * size_one_proc;
             size_t end = (current_proc < num_cores - 1) ? begin + size_one_proc : size;
 
-            sum_range(arr, begin, end, sum);
-
-            if (write_pipe(pipes, current_proc, *sum) != 0) {
-                close_pipes(pipes);
-                exit(EXIT_FAILURE);
-            }
-
-            if (close_pipes(pipes) != 0) {
-                exit(EXIT_FAILURE);
-            }
-
-            exit(EXIT_SUCCESS);
+            single_proc_handler(current_proc, pipes, arr, begin, end);
         }
     }
 
