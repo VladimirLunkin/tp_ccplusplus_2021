@@ -3,7 +3,7 @@ project(hw-2)
 
 
 # <Flags>
-set(CMAKE_C_FLAGS "-Wall -Werror -Wpedantic -fprofile-arcs -ftest-coverage")
+set(CMAKE_C_FLAGS "-Wall -Werror -fprofile-arcs -ftest-coverage")
 set(CMAKE_CXX_FLAGS "-Wall -Werror -Wpedantic -fprofile-arcs -ftest-coverage")
 # </Flags>
 
@@ -64,7 +64,7 @@ add_executable(${PROJECT_NAME} ${sources})
 
 
 # <Link libraries>
-target_link_libraries(${PROJECT_NAME} PRIVATE ${SUM}_lib)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${SUM}_lib -ldl)
 # </Link libraries>
 
 
