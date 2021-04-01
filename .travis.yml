@@ -17,14 +17,9 @@ script:
   - cmake ..
   - make
   - valgrind --tool=memcheck --leak-check=full ctest
-  - cmake -DPARALLEL=ON ..
-  - make
-  - valgrind --tool=memcheck --leak-check=full ctest
   - cd ../generator
   - python3 number_generator.py
   - cd ../build
-  - cmake -DPARALLEL=OFF ..
-  - make
   - ./hw-2
 
 after_success:

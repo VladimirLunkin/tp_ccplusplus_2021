@@ -9,29 +9,21 @@ set(CMAKE_CXX_FLAGS "-Wall -Werror -Wpedantic -fprofile-arcs -ftest-coverage")
 
 
 # <Add libraries>
-option(PARALLEL "parallel implementation" OFF)
-
 set(SUM_PATH ${PROJECT_SOURCE_DIR}/sum_lib)
 
-if (PARALLEL)
-    set(SUM "sum_parallel")
-    set(SUM_PARALLEL_LIB
-            ${SUM_PATH}/include/sum.h
-            ${SUM_PATH}/include/pipes.h
-            ${SUM_PATH}/src_parallel/sum.c
-            ${SUM_PATH}/src_parallel/pipes.c)
+set(SUM_CONSISTENTLY_LIB
+        ${SUM_PATH}/include/sum.h
+        ${SUM_PATH}/src_consistently/sum.c)
+add_library(sum_consistently_lib STATIC ${SUM_CONSISTENTLY_LIB})
+target_include_directories(sum_consistently_lib PUBLIC ${SUM_PATH}/include)
 
-    add_library(${SUM}_lib SHARED ${SUM_PARALLEL_LIB})
-else()
-    set(SUM "sum_consistently")
-    set(SUM_CONSISTENTLY_LIB
-            ${SUM_PATH}/include/sum.h
-            ${SUM_PATH}/src_consistently/sum.c)
-
-    add_library(${SUM}_lib STATIC ${SUM_CONSISTENTLY_LIB})
-endif (PARALLEL)
-
-target_include_directories(${SUM}_lib PUBLIC ${SUM_PATH}/include)
+set(SUM_PARALLEL_LIB
+        ${SUM_PATH}/include/sum.h
+        ${SUM_PATH}/include/pipes.h
+        ${SUM_PATH}/src_parallel/sum.c
+        ${SUM_PATH}/src_parallel/pipes.c)
+add_library(sum_parallel_lib SHARED ${SUM_PARALLEL_LIB})
+target_include_directories(sum_parallel_lib PUBLIC ${SUM_PATH}/include)
 # </Add libraries>
 
 
@@ -64,7 +56,8 @@ add_executable(${PROJECT_NAME} ${sources})
 
 
 # <Link libraries>
-target_link_libraries(${PROJECT_NAME} PRIVATE ${SUM}_lib -ldl)
+target_link_libraries(${PROJECT_NAME} PRIVATE sum_consistently_lib)
+target_link_libraries(${PROJECT_NAME} PRIVATE sum_parallel_lib -ldl)
 # </Link libraries>
 
 
