@@ -24,8 +24,12 @@ int metrics(func_sum_t func_sum, array_t array) {
     return EXIT_SUCCESS;
 }
 
-int main() {
-    FILE *fp = fopen(SOURCE_DIR"/generator/data.txt", "r");
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        return EXIT_FAILURE;
+    }
+
+    FILE *fp = fopen(argv[1], "r");
     if (fp == NULL) {
         return EXIT_FAILURE;
     }

@@ -2,6 +2,7 @@
 #include <unistd.h>
 
 static const int byte_in_number = 8;
+static const int number_of_bits = 256;
 static inline u_int8_t get_byte(int64_t num, int rank) {
     return (num >> (rank * byte_in_number)) & 0xFF;
 }
@@ -25,7 +26,7 @@ static inline int byte_char_to_int(const char *str, int64_t *num) {
     *num = 0;
     for (int i = 0, p = 1; i < byte_in_number; ++i) {
         *num += (u_int8_t)str[i] * p;
-        p *= 256;
+        p *= number_of_bits;
     }
 
     return SUCCESS;

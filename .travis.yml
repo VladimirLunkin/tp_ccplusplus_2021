@@ -17,10 +17,8 @@ script:
   - cmake ..
   - make
   - valgrind --tool=memcheck --leak-check=full ctest
-  - cd ../generator
-  - python3 number_generator.py
-  - cd ../build
-  - ./hw-2
+  - python3 ../generator/number_generator.py
+  - ./hw-2 data.txt
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
