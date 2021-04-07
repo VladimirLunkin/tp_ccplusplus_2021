@@ -64,4 +64,6 @@ TEST(sum, array_size_100000000) {
 
     EXPECT_EQ(0, calculate_sum(arr, Size, &sum));
     EXPECT_EQ(100000000, sum);
+
+    delete [] arr;
 }
