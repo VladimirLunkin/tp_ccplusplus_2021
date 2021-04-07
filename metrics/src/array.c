@@ -1,12 +1,13 @@
 #include "array.h"
 #include <stdio.h>
+#include <unistd.h>
 
 
 array_t create_arr(size_t capacity) {
     array_t array = {NULL, 0};
 
-    array.arr = calloc(capacity, sizeof(int));
-    if (array.arr == NULL) {
+    long int cache_level1 = sysconf(_SC_LEVEL1_DCACHE_LINESIZE);
+    if (posix_memalign((void**)&(array.arr), cache_level1, sizeof(int) * capacity)) {
         return array;
     }
 
