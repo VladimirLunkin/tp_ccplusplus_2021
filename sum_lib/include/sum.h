@@ -10,6 +10,8 @@
 #define FORK_FAILED 4
 #define WAIT_FAILED 5
 
+#define UPPER_BOUND 10
+
 int calculate_sum(const int *arr, size_t size, int64_t *sum);
 
 #endif  // SUM_LIB_INCLUDE_SUM_H_
